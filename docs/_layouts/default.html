@@ -50,8 +50,13 @@
 
 <h2 id="test-online-here">Test online <a href="https://valentynsichkar.name/traffic_signs.html">here</a></h2>
 
+<h3 id="explore-course">Course:</h3>        
+<ul>
+  <li>Explore course <strong>"Convolutional Neural Networks for Image Classification"</strong> here: <a href="https://stepik.org/course/53801/promo" target=_blank>https://stepik.org/course/53801/promo</a></li>
+</ul>
+
 <h2 id="content">Content</h2>
-<p>Theory and experimental results (on this page):</p>
+<p>Short description of the content. Full codes you can find inside the course by link above:</p>
 
 <ul>
   <li><a href="#loading-data">Loading Data</a>
@@ -79,7 +84,7 @@
 <p><br /></p>
 
 <h3 id="loading-data"><a id="loading-data">Loading Data</a></h3>
-<p>Data used for this task is <strong>German Traffic Sign Benchmarks (GTSB)</strong>.
+<p>Data used for this task is <strong>German Traffic Sign Benchmarks (GTSRB)</strong>.
 <br />Initially datasets consist of images in <em>PPM</em> format with different sizes.</p>
 
 <p>For current task datasets were organized as it was done for <a href="https://github.com/sichkar-valentyn/Neural_Networks_for_Computer_Vision/blob/master/Theory/cifar10.md">CIFAR-10 Image Classification</a>:</p>
@@ -354,9 +359,6 @@
 <h3 id="model-1"><a id="model-1">Model 1</a></h3>
 <p>For <strong>Model 1</strong> architecture will be used as it was done for <a href="https://github.com/sichkar-valentyn/Neural_Networks_for_Computer_Vision/blob/master/Theory/cifar10.md">CIFAR-10 Image Classification</a>:
 <br /><code class="highlighter-rouge">Input</code> –&gt; <code class="highlighter-rouge">Conv</code> –&gt; <code class="highlighter-rouge">ReLU</code> –&gt; <code class="highlighter-rouge">Pool</code> –&gt; <code class="highlighter-rouge">Affine</code> –&gt; <code class="highlighter-rouge">ReLU</code> –&gt; <code class="highlighter-rouge">Affine</code> –&gt; <code class="highlighter-rouge">Softmax</code></p>
-
-<p><img src="images/Model_1_Architecture_TS.png" alt="Model_1_Architecture_TS.png" /></p>
-
 <p><br />For <strong>Model 1</strong> following parameters will be used:</p>
 
 <table>
@@ -398,51 +400,6 @@
 
 <h3 id="overfitting-small-data-for-model-1"><a id="overfitting-small-data-for-model-1">Overfitting Small Data for Model 1</a></h3>
 <p>For Overfitting Small Data of Model 1 dataset <strong>‘data8.pickle’</strong> was chosen.
-<br />Code for Overfitting Small Data for Model 1 will be used as it was done for <a href="https://github.com/sichkar-valentyn/Neural_Networks_for_Computer_Vision/blob/master/Theory/cifar10.md">CIFAR-10 Image Classification</a>:</p>
-
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
-
-<span class="c"># Importing module 'ConvNet1.py'</span>
-<span class="kn">from</span> <span class="nn">Helper_Functions.ConvNet1</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="c"># Importing module 'Solver.py'</span>
-<span class="kn">from</span> <span class="nn">Solver</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="c"># Loading data</span>
-<span class="c"># Opening file for reading in binary mode</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'Data_Preprocessing/data8.pickle'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'latin1'</span><span class="p">)</span>  <span class="c"># dictionary type</span>
-
-<span class="c"># Number of training examples</span>
-<span class="n">number_of_training_data</span> <span class="o">=</span> <span class="mi">10</span>
-
-<span class="c"># Preparing data by slicing in 'data' dictionary appropriate array</span>
-<span class="n">small_data</span> <span class="o">=</span> <span class="p">{</span>
-             <span class="s">'x_train'</span><span class="p">:</span><span class="n">d</span><span class="p">[</span><span class="s">'x_train'</span><span class="p">][:</span><span class="n">number_of_training_data</span><span class="p">],</span>
-             <span class="s">'y_train'</span><span class="p">:</span><span class="n">d</span><span class="p">[</span><span class="s">'y_train'</span><span class="p">][:</span><span class="n">number_of_training_data</span><span class="p">],</span>
-             <span class="s">'x_validation'</span><span class="p">:</span><span class="n">d</span><span class="p">[</span><span class="s">'x_validation'</span><span class="p">],</span>
-             <span class="s">'y_validation'</span><span class="p">:</span><span class="n">d</span><span class="p">[</span><span class="s">'y_validation'</span><span class="p">]</span>
-             <span class="p">}</span>
-
-<span class="c"># Creating instance of class for 'ConvNet1' and initializing model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">ConvNet1</span><span class="p">(</span><span class="n">weight_scale</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">hidden_dimension</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-
-<span class="c"># Creating instance of class for 'Solver' and initializing model</span>
-<span class="n">solver</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
-                <span class="n">small_data</span><span class="p">,</span>
-                <span class="n">update_rule</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span>
-                <span class="n">optimization_config</span><span class="o">=</span><span class="p">{</span><span class="s">'learning_rate'</span><span class="p">:</span><span class="mf">1e-3</span><span class="p">},</span>
-                <span class="n">learning_rate_decay</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-                <span class="n">batch_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-                <span class="n">number_of_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                <span class="n">print_every</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                <span class="n">verbose_mode</span><span class="o">=</span><span class="bp">True</span>
-               <span class="p">)</span>
-
-<span class="c"># Running training process</span>
-<span class="n">solver</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-</code></pre></div></div>
-
 <p>Overfitting Small Data with 10 training examples and 100 epochs is shown on the figure below.</p>
 
 <p><img src="images/Overfitting_Small_Data_for_Model_1_TS.png" alt="Overfitting_Small_Data_for_Model_1_TS.png" /></p>
@@ -451,40 +408,6 @@
 
 <h3 id="training-of-model-1"><a id="training-of-model-1">Training of Model 1</a></h3>
 <p>For training Model 1 dataset <strong>‘data8.pickle’</strong> was chosen as it reached the best accuracy over all datasets.
-<br />Code for training Model 1 will be used as it was done for <a href="https://github.com/sichkar-valentyn/Neural_Networks_for_Computer_Vision/blob/master/Theory/cifar10.md">CIFAR-10 Image Classification</a>:</p>
-
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
-
-<span class="c"># Importing module 'ConvNet1.py'</span>
-<span class="kn">from</span> <span class="nn">Helper_Functions.ConvNet1</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="c"># Importing module 'Solver.py'</span>
-<span class="kn">from</span> <span class="nn">Solver</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="c"># Loading data</span>
-<span class="c"># Opening file for reading in binary mode</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'Data_Preprocessing/data8.pickle'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'latin1'</span><span class="p">)</span>  <span class="c"># dictionary type</span>
-
-<span class="c"># Creating instance of class for 'ConvNet1' and initializing model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">ConvNet1</span><span class="p">(</span><span class="n">input_dimension</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="n">weight_scale</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">hidden_dimension</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="mi">1</span><span class="o">-</span><span class="n">e3</span><span class="p">)</span>
-
-<span class="c"># Creating instance of class for 'Solver' and initializing model</span>
-<span class="n">solver</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
-                <span class="n">d</span><span class="p">,</span>
-                <span class="n">update_rule</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span>
-                <span class="n">optimization_config</span><span class="o">=</span><span class="p">{</span><span class="s">'learning_rate'</span><span class="p">:</span><span class="mf">1e-3</span><span class="p">},</span>
-                <span class="n">learning_rate_decay</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-                <span class="n">batch_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-                <span class="n">number_of_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-                <span class="n">print_every</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                <span class="n">verbose_mode</span><span class="o">=</span><span class="bp">True</span>
-               <span class="p">)</span>
-
-<span class="c"># Running training process</span>
-<span class="n">solver</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-</code></pre></div></div>
-
 <p>Model 1 with ‘data8.pickle’ dataset reached <strong>0.989</strong> training accuracy.
 <br />Training process of Model 1 with 17 500 iterations is shown on the figure below.</p>
 
